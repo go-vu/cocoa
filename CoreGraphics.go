@@ -16,7 +16,7 @@ type CGImageRef unsafe.Pointer
 // CGImageCreate creates a new Core Graphics image object that represents the
 // same content than the Go image passed as argument.
 //
-// The image content is copied by the funciton, it's the program's responsiblity
+// The image content is copied by the funciton, it's the program's responsibility
 // to free the resources allocated by the returned CGImageRef with a call to
 // CGImageRelease or CFRelease.
 //
@@ -62,7 +62,7 @@ func CGImageCreate(img image.Image) CGImageRef {
 // The image content is shared between the Go and Core Graphics images, so the
 // program must ensure that the image.Image value it passed to the function is
 // referenced and unmodified for as long as the returned CGImageRef is in use.
-// It's the program's responsiblity to free the resources allocated by the
+// It's the program's responsibility to free the resources allocated by the
 // returned CGImageRef with a call to CGImageRelease or CFRelease.
 //
 // The function supports any image types defined in the standard image package,
