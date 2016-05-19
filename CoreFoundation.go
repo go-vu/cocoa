@@ -33,7 +33,7 @@ func CFRelease(obj CFTypeRef) {
 // The CFStringRef type is a reference to a Core Foundation string object.
 //
 // https://developer.apple.com/library/ios/documentation/CoreFoundation/Reference/CFStringRef/index.html#//apple_ref/c/tdef/CFStringRef
-type CFStringRef C.CFStringRef
+type CFStringRef unsafe.Pointer
 
 // CFStringCreate takes a Go string as argument and creates a CFString object
 // that represents the same content, then returns a reference to the newly
