@@ -18,7 +18,7 @@ type CGImageRef unsafe.Pointer
 //
 // The image content is copied by the funciton, it's the program's responsibility
 // to free the resources allocated by the returned CGImageRef with a call to
-// CGImageRelease or CFRelease.
+// CFRelease.
 //
 // The function supports any image types defined in the standard image package,
 // but will panic if the program attempts to create a CGImageRef from an
@@ -63,7 +63,7 @@ func CGImageCreate(img image.Image) CGImageRef {
 // program must ensure that the image.Image value it passed to the function is
 // referenced and unmodified for as long as the returned CGImageRef is in use.
 // It's the program's responsibility to free the resources allocated by the
-// returned CGImageRef with a call to CGImageRelease or CFRelease.
+// returned CGImageRef with a call to CFRelease.
 //
 // The function supports any image types defined in the standard image package,
 // but will panic if the program attempts to create a CGImageRef from an
@@ -97,22 +97,6 @@ func CGImageCreateNoCopy(img image.Image) CGImageRef {
 	C.CFRelease(provider)
 	C.CFRelease(data.colors)
 	return CGImageRef(cgimg)
-}
-
-// CGImageRetain increases the reference counter of the image object passed as
-// argument.
-//
-// https://developer.apple.com/library/mac/documentation/CoreFoundation/Reference/CFTypeRef/#//apple_ref/c/func/CFRetain
-func CGImageRetain(img CGImageRef) {
-	CFRetain(CFTypeRef(img))
-}
-
-// CFImageRelease decreases the reference counter of the image object passed
-// as argument.
-//
-// https://developer.apple.com/library/mac/documentation/CoreFoundation/Reference/CFTypeRef/#//apple_ref/c/func/CFRelease
-func CGImageRelease(img CGImageRef) {
-	CFRelease(CFTypeRef(img))
 }
 
 type imageData struct {

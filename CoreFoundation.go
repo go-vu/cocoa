@@ -40,7 +40,7 @@ type CFStringRef unsafe.Pointer
 // created string.
 //
 // It is the program's responsibility to release the object returned by this
-// function with a call to CFStringRelease or CFRelease.
+// function with a call to CFRelease.
 //
 // https://developer.apple.com/library/ios/documentation/CoreFoundation/Reference/CFStringRef/index.html#//apple_ref/c/func/CFStringCreateWithBytes
 func CFStringCreate(s string) CFStringRef {
@@ -52,22 +52,6 @@ func CFStringCreate(s string) CFStringRef {
 		C.kCFStringEncodingUTF8,
 		0,
 	))
-}
-
-// CFStringRetain increases the reference counter of the string object passed as
-// argument.
-//
-// https://developer.apple.com/library/mac/documentation/CoreFoundation/Reference/CFTypeRef/#//apple_ref/c/func/CFRetain
-func CFStringRetain(s CFStringRef) {
-	CFRetain(CFTypeRef(s))
-}
-
-// CFStringRelease decreases the reference counter of the string object passed
-// as argument.
-//
-// https://developer.apple.com/library/mac/documentation/CoreFoundation/Reference/CFTypeRef/#//apple_ref/c/func/CFRelease
-func CFStringRelease(s CFStringRef) {
-	CFRelease(CFTypeRef(s))
 }
 
 // GoString creates a new Go string value with a content equivalent to the

@@ -14,11 +14,11 @@ func TestCFString(t *testing.T) {
 
 	for _, test := range tests {
 		s1 := CFStringCreate(test)
-		CFStringRetain(s1)
-		CFStringRelease(s1)
+		CFRetain(CFTypeRef(s1))
+		CFRelease(CFTypeRef(s1))
 
 		s2 := GoString(s1)
-		CFStringRelease(s1)
+		CFRelease(CFTypeRef(s1))
 
 		if test != s2 {
 			t.Errorf(test, "!=", s2)
