@@ -53,7 +53,7 @@ func TestStringRelease(t *testing.T) {
 	s := NewString("")
 	s.release()
 
-	if s.ref != nil {
+	if s.Ref() != nil {
 		t.Error("releasing didn't set the internal string reference to nil")
 	}
 }

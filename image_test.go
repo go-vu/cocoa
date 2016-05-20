@@ -33,3 +33,12 @@ func TestNewImageWrap(t *testing.T) {
 		t.Error("invalid image reference:", ref)
 	}
 }
+
+func TestImageRelease(t *testing.T) {
+	img := NewImage(gopher)
+	img.release()
+
+	if img.Ref() != nil {
+		t.Error("invalid non-nil image reference found after releasing")
+	}
+}
