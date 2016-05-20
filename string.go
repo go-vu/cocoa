@@ -36,9 +36,6 @@ func NewStringWrap(ref CFStringRef) *String {
 
 // String returns the content of the String object as a Go string value.
 func (s *String) String() string {
-	if s.ref == nil {
-		return ""
-	}
 	return GoString(s.ref)
 }
 

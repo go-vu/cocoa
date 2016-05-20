@@ -40,15 +40,6 @@ func TestNewStringWrap(t *testing.T) {
 	}
 }
 
-func TestStringZeroValue(t *testing.T) {
-	s1 := &String{}
-	s2 := s1.String()
-
-	if s2 != "" {
-		t.Error("string zero-value produced an invalid Go string:", s2)
-	}
-}
-
 func TestStringRelease(t *testing.T) {
 	s := NewString("")
 	s.release()
