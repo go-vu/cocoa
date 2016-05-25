@@ -171,7 +171,7 @@ func extractImageData(img image.Image) imageData {
 			width:  bounds.Dx(),
 			height: bounds.Dy(),
 			colors: C.CGColorSpaceCreateDeviceGray(),
-			info:   C.CGBitmapInfo(C.kCGImageAlphaOnly),
+			info:   C.CGBitmapInfo(C.kCGImageAlphaNone),
 		}
 
 	case *image.Alpha16:
@@ -183,7 +183,7 @@ func extractImageData(img image.Image) imageData {
 			width:  bounds.Dx(),
 			height: bounds.Dy(),
 			colors: C.CGColorSpaceCreateDeviceGray(),
-			info:   C.CGBitmapInfo(C.kCGImageAlphaOnly),
+			info:   C.CGBitmapInfo(C.kCGImageAlphaNone),
 		}
 
 	case *image.Gray:
