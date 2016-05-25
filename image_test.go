@@ -11,28 +11,34 @@ import (
 )
 
 func TestNewImage(t *testing.T) {
-	img := NewImage(gopherNRGBA)
+	for _, test := range gopherImages {
+		img := NewImage(test)
 
-	if img.Ref() == nil {
-		t.Error("invalid nil image reference")
+		if img.Ref() == nil {
+			t.Error("invalid nil image reference")
+		}
 	}
 }
 
 func TestNewImageWrap(t *testing.T) {
-	img1 := CGImageCreate(gopherNRGBA)
-	img2 := NewImageWrap(img1)
+	for _, test := range gopherImages {
+		img1 := CGImageCreate(test)
+		img2 := NewImageWrap(img1)
 
-	if ref := img2.Ref(); ref != img1 {
-		t.Error("invalid image reference:", ref)
+		if ref := img2.Ref(); ref != img1 {
+			t.Error("invalid image reference:", ref)
+		}
 	}
 }
 
 func TestImageRelease(t *testing.T) {
-	img := NewImage(gopherNRGBA)
-	img.release()
+	for _, test := range gopherImages {
+		img := NewImage(gopherNRGBA)
+		img.release()
 
-	if img.Ref() != nil {
-		t.Error("invalid non-nil image reference found after releasing")
+		if img.Ref() != nil {
+			t.Error("invalid non-nil image reference found after releasing")
+		}
 	}
 }
 
