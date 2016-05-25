@@ -24,7 +24,7 @@ type CGImageRef unsafe.Pointer
 // but will panic if the program attempts to create a CGImageRef from an
 // unsupported value.
 //
-// https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CGImage/
+// https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CGImage/
 func CGImageCreate(img image.Image) CGImageRef {
 	data := extractImageData(img)
 
@@ -69,7 +69,7 @@ func CGImageCreate(img image.Image) CGImageRef {
 // but will panic if the program attempts to create a CGImageRef from an
 // unsupported value.
 //
-// https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CGImage/
+// https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CGImage/
 func CGImageCreateNoCopy(img image.Image) CGImageRef {
 	data := extractImageData(img)
 
