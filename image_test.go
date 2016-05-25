@@ -33,7 +33,7 @@ func TestNewImageWrap(t *testing.T) {
 
 func TestImageRelease(t *testing.T) {
 	for _, test := range gopherImages {
-		img := NewImage(gopherNRGBA)
+		img := NewImage(test)
 		img.release()
 
 		if img.Ref() != nil {
