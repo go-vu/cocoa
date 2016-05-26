@@ -11,7 +11,7 @@ before_install:
   - (cd `dirname $GOROOT` && tar -xzf /tmp/go.tar.gz)
   - go version
 
-  - cd $GOPATH
+  - cd $GOPATH/src
   - git clone --depth=50 --branch=master https://$REPO.git $REPO
   - cd $REPO
   - git checkout -qf $TRAVIS_COMMIT
