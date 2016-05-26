@@ -1,8 +1,8 @@
 // +build darwin
 
-package cocoa
+package CG
 
-// #include <CoreGraphics/CoreGraphics.h>
+// #include <CoreGraphics/CGImage.h>
 import "C"
 import (
 	"fmt"
@@ -10,22 +10,24 @@ import (
 	"unsafe"
 )
 
-// The CGImageRef type is a reference to a Core Graphics image object.
-type CGImageRef unsafe.Pointer
+// The ImageRef type is a reference to a Core Graphics image object.
+//
+// https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CGImage/#//apple_ref/c/tdef/CGImageRef
+type ImageRef C.CGImageRef
 
-// CGImageCreate creates a new Core Graphics image object that represents the
+// ImageCreate creates a new Core Graphics image object that represents the
 // same content than the Go image passed as argument.
 //
 // The image content is copied by the funciton, it's the program's responsibility
-// to free the resources allocated by the returned CGImageRef with a call to
+// to free the resources allocated by the returned ImageRef with a call to
 // CFRelease.
 //
 // The function supports any image types defined in the standard image package,
-// but will panic if the program attempts to create a CGImageRef from an
+// but will panic if the program attempts to create a ImageRef from an
 // unsupported value.
 //
 // https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CGImage/
-func CGImageCreate(img image.Image) CGImageRef {
+func ImageCreate(img image.Image) ImageRef {
 	data := extractImageData(img)
 
 	memory := C.CFDataCreate(
@@ -53,24 +55,24 @@ func CGImageCreate(img image.Image) CGImageRef {
 	C.CFRelease(provider)
 	C.CFRelease(memory)
 	C.CFRelease(data.colors)
-	return CGImageRef(cgimg)
+	return ImageRef(cgimg)
 }
 
-// CGImageCreate creates a new Core Graphics image object that represents the
+// ImageCreateNoCopy creates a new Core Graphics image object that represents the
 // same content than the Go image passed as argument.
 //
 // The image content is shared between the Go and Core Graphics images, so the
 // program must ensure that the image.Image value it passed to the function is
-// referenced and unmodified for as long as the returned CGImageRef is in use.
+// referenced and unmodified for as long as the returned ImageRef is in use.
 // It's the program's responsibility to free the resources allocated by the
-// returned CGImageRef with a call to CFRelease.
+// returned ImageRef with a call to CFRelease.
 //
 // The function supports any image types defined in the standard image package,
-// but will panic if the program attempts to create a CGImageRef from an
+// but will panic if the program attempts to create a ImageRef from an
 // unsupported value.
 //
 // https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CGImage/
-func CGImageCreateNoCopy(img image.Image) CGImageRef {
+func ImageCreateNoCopy(img image.Image) ImageRef {
 	data := extractImageData(img)
 
 	provider := C.CGDataProviderCreateWithData(
@@ -96,7 +98,7 @@ func CGImageCreateNoCopy(img image.Image) CGImageRef {
 
 	C.CFRelease(provider)
 	C.CFRelease(data.colors)
-	return CGImageRef(cgimg)
+	return ImageRef(cgimg)
 }
 
 type imageData struct {

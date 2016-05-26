@@ -1,10 +1,10 @@
 // +build darwin
 
-package cocoa
+package CF
 
 import "testing"
 
-func TestCFString(t *testing.T) {
+func TestString(t *testing.T) {
 	tests := []string{
 		"",
 		"0123456789",
@@ -13,12 +13,12 @@ func TestCFString(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		s1 := CFStringCreate(test)
-		CFRetain(CFTypeRef(s1))
-		CFRelease(CFTypeRef(s1))
+		s1 := StringCreate(test)
+		Retain(TypeRef(s1))
+		Release(TypeRef(s1))
 
 		s2 := GoString(s1)
-		CFRelease(CFTypeRef(s1))
+		Release(TypeRef(s1))
 
 		if test != s2 {
 			t.Errorf(test, "!=", s2)

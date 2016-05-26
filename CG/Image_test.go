@@ -1,45 +1,42 @@
-// +build darwin
+// +biild darwin
 
-package cocoa
+package CG
 
 import (
 	"bufio"
 	"image"
+	"image/color"
 	"image/draw"
 	"os"
 	"testing"
+
+	_ "image/png"
+
+	"github.com/go-vu/cocoa/CF"
 )
 
-func TestNewImage(t *testing.T) {
+func TestImageCreate(t *testing.T) {
 	for _, test := range gopherImages {
-		img := NewImage(test)
-
-		if img.Ref() == nil {
-			t.Error("invalid nil image reference")
-		}
+		img := ImageCreate(test)
+		CF.Retain(CF.TypeRef(img))
+		CF.Release(CF.TypeRef(img))
+		CF.Release(CF.TypeRef(img))
 	}
 }
 
-func TestNewImageWrap(t *testing.T) {
+func TestImageCreateNoCopy(t *testing.T) {
 	for _, test := range gopherImages {
-		img1 := CGImageCreate(test)
-		img2 := NewImageWrap(img1)
-
-		if ref := img2.Ref(); ref != img1 {
-			t.Error("invalid image reference:", ref)
-		}
+		img := ImageCreateNoCopy(test)
+		CF.Retain(CF.TypeRef(img))
+		CF.Release(CF.TypeRef(img))
+		CF.Release(CF.TypeRef(img))
 	}
 }
 
-func TestImageRelease(t *testing.T) {
-	for _, test := range gopherImages {
-		img := NewImage(test)
-		img.release()
-
-		if img.Ref() != nil {
-			t.Error("invalid non-nil image reference found after releasing")
-		}
-	}
+func TestImageCreatePanic(t *testing.T) {
+	defer func() { recover() }()
+	ImageCreate(image.NewUniform(color.Black))
+	t.Error("calling ImageCreate with an unsupported image type did not panic!")
 }
 
 func loadImage() image.Image {
