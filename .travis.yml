@@ -23,7 +23,7 @@ install:
   - go install github.com/mattn/goveralls
 
 script:
-  - go test -v -race -coverprofile cover.out
+  - go test -v -race -coverprofile cover.out ./...
   - goveralls -service travis-ci -repotoken $COVERALLS_TOKEN -coverprofile cover.out
 
 notifications:
