@@ -26,9 +26,12 @@ script:
   - go test -v -race -coverprofile cover-CF.out ./CF
   - go test -v -race -coverprofile cover-CG.out ./CG
   - go test -v -race -coverprofile cover-CT.out ./CT
-  - goveralls -service travis-ci -repotoken $COVERALLS_TOKEN -coverprofile cover-CF.out
-  - goveralls -service travis-ci -repotoken $COVERALLS_TOKEN -coverprofile cover-CG.out
-  - goveralls -service travis-ci -repotoken $COVERALLS_TOKEN -coverprofile cover-CT.out
+
+  - cat cover-CF.out | grep -v 'mode: set' >> cover.out
+  - cat cover-CG.out | grep -v 'mode: set' >> cover.out
+  - cat cover-CT.out | grep -v 'mode: set' >> cover.out
+
+  - goveralls -service travis-ci -repotoken $COVERALLS_TOKEN -coverprofile cover.out
 
 notifications:
   email: false
