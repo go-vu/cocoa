@@ -25,3 +25,6 @@ install:
 script:
   - go test -v -race -coverprofile cover.out
   - goveralls -service travis-ci -repotoken $COVERALLS_TOKEN -coverprofile cover.out
+
+notifications:
+  email: false

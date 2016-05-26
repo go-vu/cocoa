@@ -1,4 +1,4 @@
-// +biild darwin
+// +build darwin
 
 package CG
 
