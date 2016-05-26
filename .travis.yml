@@ -21,6 +21,7 @@ install:
   - go get -v -t ./CF
   - go get -v -t ./CG
   - go get -v -t ./CT
+  - go get -v -t .
   - go get github.com/mattn/goveralls
   - go install github.com/mattn/goveralls
 
