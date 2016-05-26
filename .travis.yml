@@ -27,9 +27,9 @@ script:
   - go test -v -race -coverprofile cover-CG.out ./CG
   - go test -v -race -coverprofile cover-CT.out ./CT
 
-  - cat cover-CF.out | grep -v 'mode: set' >> cover.out
-  - cat cover-CG.out | grep -v 'mode: set' >> cover.out
-  - cat cover-CT.out | grep -v 'mode: set' >> cover.out
+  - 'cat cover-CF.out | grep -v "mode: set" >> cover.out'
+  - 'cat cover-CG.out | grep -v "mode: set" >> cover.out'
+  - 'cat cover-CT.out | grep -v "mode: set" >> cover.out'
 
   - goveralls -service travis-ci -repotoken $COVERALLS_TOKEN -coverprofile cover.out
 
