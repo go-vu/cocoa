@@ -8,12 +8,14 @@ import (
 	"fmt"
 	"image"
 	"unsafe"
+
+	"github.com/go-vu/cocoa/CF"
 )
 
 // The ImageRef type is a reference to a Core Graphics image object.
 //
 // https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CGImage/#//apple_ref/c/tdef/CGImageRef
-type ImageRef C.CGImageRef
+type ImageRef CF.TypeRef
 
 // ImageCreate creates a new Core Graphics image object that represents the
 // same content than the Go image passed as argument.
@@ -55,7 +57,7 @@ func ImageCreate(img image.Image) ImageRef {
 	C.CFRelease(provider)
 	C.CFRelease(memory)
 	C.CFRelease(data.colors)
-	return ImageRef(cgimg)
+	return ImageRef(unsafe.Pointer(cgimg))
 }
 
 // ImageCreateNoCopy creates a new Core Graphics image object that represents the
@@ -98,7 +100,28 @@ func ImageCreateNoCopy(img image.Image) ImageRef {
 
 	C.CFRelease(provider)
 	C.CFRelease(data.colors)
-	return ImageRef(cgimg)
+	return ImageRef(unsafe.Pointer(cgimg))
+}
+
+// Retain increases the refence counter of the Core Graphics image passed
+// as argument.
+//
+// https://developer.apple.com/library/mac/documentation/CoreFoundation/Reference/CFTypeRef/#//apple_ref/c/func/CFRetain
+func (img ImageRef) Retain() {
+	CF.TypeRef(img).Retain()
+}
+
+// Release decreases the reference counter of the Core Graphics image
+// passed as argument.
+//
+// https://developer.apple.com/library/mac/documentation/CoreFoundation/Reference/CFTypeRef/#//apple_ref/c/func/CFRelease
+func (img ImageRef) Release() {
+	CF.TypeRef(img).Release()
+}
+
+// String satisfies the fmt.Stringer interface.
+func (img ImageRef) String() string {
+	return CF.TypeRef(img).String()
 }
 
 type imageData struct {

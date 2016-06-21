@@ -11,25 +11,23 @@ import (
 	"testing"
 
 	_ "image/png"
-
-	"github.com/go-vu/cocoa/CF"
 )
 
 func TestImageCreate(t *testing.T) {
 	for _, test := range gopherImages {
 		img := ImageCreate(test)
-		CF.Retain(CF.TypeRef(img))
-		CF.Release(CF.TypeRef(img))
-		CF.Release(CF.TypeRef(img))
+		img.Retain()
+		img.Release()
+		img.Release()
 	}
 }
 
 func TestImageCreateNoCopy(t *testing.T) {
 	for _, test := range gopherImages {
 		img := ImageCreateNoCopy(test)
-		CF.Retain(CF.TypeRef(img))
-		CF.Release(CF.TypeRef(img))
-		CF.Release(CF.TypeRef(img))
+		img.Retain()
+		img.Release()
+		img.Release()
 	}
 }
 
@@ -37,6 +35,17 @@ func TestImageCreatePanic(t *testing.T) {
 	defer func() { recover() }()
 	ImageCreate(image.NewUniform(color.Black))
 	t.Error("calling ImageCreate with an unsupported image type did not panic!")
+}
+
+func TestImageString(t *testing.T) {
+	img := ImageCreate(gopherNRGBA)
+	s := img.String()
+
+	if len(s) == 0 {
+		t.Error("invalid empty string representation of a CG.ImageRef")
+	}
+
+	img.Release()
 }
 
 func loadImage() image.Image {
